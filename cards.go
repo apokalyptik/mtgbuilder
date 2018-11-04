@@ -146,7 +146,8 @@ func init() {
 			"generic-tribe-support": regexp.MustCompile(
 				strings.Join(
 					[]string{
-						"(?i)( ((addition|is|cinstances?|hooses?|shares?|all)[^.]+creature types?|creature[^.]+choice) )",
+						// needs work...
+						"(?i)( ((addition|is|instances?|hooses?|shares?|all)[^.]+creature types?|creature[^.]+choice) )",
 					},
 					"|",
 				),

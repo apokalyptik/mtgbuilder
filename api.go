@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -26,25 +25,14 @@ func (a *apiDB) save() error {
 }
 
 func (a *apiDB) filter(cards []*cardInfo, colors []string) []*cardInfo {
+	cid := strings.Join(colors, "")
 	rval := []*cardInfo{}
-	log.Println("evaluating", len(cards), "cards")
 	for _, card := range cards {
-		var match = false
-		log.Println(card.Name)
-		if len(card.ColorID) > 0 {
-			for _, has := range card.ColorID {
-				for _, want := range colors {
-					if has == want {
-						match = true
-						break
-					}
-				}
-				if match {
-					break
-				}
+		var match = true
+		for _, has := range card.ColorID {
+			if !strings.Contains(cid, has) {
+				match = false
 			}
-		} else {
-			match = true
 		}
 		if match {
 			rval = append(rval, card)
