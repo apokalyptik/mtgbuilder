@@ -12,6 +12,6 @@
 *.out
 
 **.swp
-json.db
+.json.db
 processed.json
 mtgbuilder
