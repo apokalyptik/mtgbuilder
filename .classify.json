@@ -1,0 +1,93 @@
+[
+        {
+                "name": "commander-type",
+                "tags": ["commander"],
+                "rxgo": true,
+                "rx": {
+                        "type": [
+                                "(?i)(Summon Legend|Legendary Creature)"
+                        ]
+                }
+        },
+        {
+                "name": "commander-text",
+                "tags": ["commander"],
+                "rxgo": true,
+                "rx": {
+                        "text": [
+                                "(?i)can be your commander"
+                        ]
+                }
+        },
+        {
+                "name": "ramp",
+                "tags": ["ramp"],
+                "rxgo": true,
+                "rx": {
+                        "text": [
+                                "(?i)(^| )add[^.]+{[^}]+}",
+                                "(?i)(^| )add[^.]+mana",
+				"(?i)(^| )play[^.]+additional[^.]+lands?",
+                                "(?i)(^| )put[^.]+lands?[^.]+battlefield",
+                                "(?i)(^| )search your library for[^.]+(forest|swamp|island|plains|mountain|land)s?"
+                        ],
+                        "notype": [
+                                "/land/i"
+                        ]
+                }
+        },
+        {
+                "name": "draw",
+                "rxgo": true,
+                "tags": ["draw"],
+                "rx": {
+                        "text": [
+                                "(?i)(^| )cards? into your hand( |\\.|$)",
+                                "(?i)(^| )draw (a|x|that many|one|\\d+) cards?( |\\.|$)"
+                        ]
+                }
+        },
+        {
+                "name": "board-wipe",
+                "rxgo": true,
+                "tags": ["removal","board-wipe"],
+                "rx": {
+                        "text": [
+                		"(?i)(^| )(sacrifice|destroy|exile) all( |\\.|$)"
+                        ]
+                }
+        },
+        {
+                "name": "tribe-support",
+                "tags": ["tribe-support"],
+                "rxgo": true,
+                "rx": {
+                        "text": [
+				"(?i)((^| )((addition|is|instances?|hooses?|shares?|all)[^.]+creature types?|creature[^.]+choice))( |\\.|$)"
+                        ]
+                }
+        },
+        {
+                "name": "counters",
+                "tags": ["counters"],
+                "rxgo": true,
+                "rx": {
+                        "text": [
+				"(?i)((^| )(proliferates?|((any|another) kind of)? counters? (from|to|on|already)?))( |\\.|$)",
+				"(?i)((^| )(Bolster \\d+|Suspend \\d+|{E}))( |\\.|$)",
+				"(?i)((^| )([+-]\\d+/[+-]\\d+ counters?))( |\\.|$)",
+                                "(?i)((^| )(Age|Aim|Arrow|Arrowhead|Awakening) counters?)( |\\.|$)",
+                                "(?i)((^| )(Blaze|Blood|Bounty|Bribery|Brick|Carrion|Charge|CRANK!|Credit|Corpse|Crystal) counters?)( |\\.|$)",
+                                "(?i)((^| )(Cube|Currency|Death|Delay|Depletion|Despair|Devotion|Divinity|Doom|Dream|Echo|Egg) counters?)( |\\.|$)",
+                                "(?i)((^| )(Elixir|Energy|Eon|Experience|Eyeball|Fade|Fate|Feather|Filibuster|Flood|Fungus|Fuse|Gem) counters?)( |\\.|$)",
+                                "(?i)((^| )(Glyph|Golds|Growth|Hatchling|Healing|Hit|Hoofprint|Hour|Hourglass|Hunger|Ice) counters?)( |\\.|$)",
+                                "(?i)((^| )(Incubation|Infection|Intervention|Isolation|Javelin|Ki|Level|Lore|Loyalty|Luck) counters?)( |\\.|$)",
+                                "(?i)((^| )(Magnet|Manifestation|Mannequin|Mask|Matrix|Mine|Mining|Mire|Music|Muster|Net) counters?)( |\\.|$)",
+                                "(?i)((^| )(Omen|Ore|Page|Pain|Paralyzation|Petal|Petrification|Phylactery|Pin|Plague) counters?)( |\\.|$)",
+                                "(?i)((^| )(Poison|Polyp|Pressure|Prey|Pupa|Quest|Rust|Scream|Shell|Shield|Silver|Shred) counters?)( |\\.|$)",
+                                "(?i)((^| )(Sleep|Sleight|Slime|Slumber|Soot|Spore|Storage|Strife|Study|Theft|Tide|Time|Tower) counters?)( |\\.|$)",
+                                "(?i)((^| )(Training|Trap|Treasure|Velocity|Verse|Vitality|Volatile|Wage|Winch|Wind|Wish) counters?)( |\\.|$)"
+                        ]
+		}
+        }
+]

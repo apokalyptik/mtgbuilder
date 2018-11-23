@@ -1,5 +1,7 @@
 package main
 
+//go:generate fileb0x .b0x.json
+
 import (
 	"log"
 	"net/http"

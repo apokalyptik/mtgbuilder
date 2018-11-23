@@ -1,0 +1,14 @@
+{
+        "pkg": "static",
+        "dest": "./static/",
+        "fmt": false,
+        "custom": [
+                {
+                        "files": [
+                                ".classify.json"
+                        ]
+                }
+        ],
+        "compression": {
+        }
+}
