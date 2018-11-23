@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"regexp"
 	"strings"
 
@@ -25,31 +24,35 @@ type cConfig struct {
 	RxGo bool     `json:"rxgo"`
 	Tags []string `json:"tags"`
 	Rx   struct {
-		Name   []string `json:"name"`
-		NoName []string `json:"noname"`
-		Cid    []string `json:"cid"`
-		NoCid  []string `json:"nocid"`
-		Cmc    []string `json:"cmc"`
-		NoCmc  []string `json:"nocmc"`
-		Mana   []string `json:"mana"`
-		NoMana []string `json:"nomana"`
-		Text   []string `json:"text"`
-		NoText []string `json:"notext"`
-		Type   []string `json:"type"`
-		NoType []string `json:"notype"`
+		Name     []string `json:"name"`
+		NoName   []string `json:"noname"`
+		Cid      []string `json:"cid"`
+		NoCid    []string `json:"nocid"`
+		Cmc      []string `json:"cmc"`
+		NoCmc    []string `json:"nocmc"`
+		Mana     []string `json:"mana"`
+		NoMana   []string `json:"nomana"`
+		Text     []string `json:"text"`
+		NoText   []string `json:"notext"`
+		Type     []string `json:"type"`
+		NoType   []string `json:"notype"`
+		Rarity   []string `json:"rarity"`
+		NoRarity []string `json:"norarity"`
 	} `json:"rx"`
-	yesNameRx []*regexp.Regexp
-	noNameRx  []*regexp.Regexp
-	yesCidRx  []*regexp.Regexp
-	noCidRx   []*regexp.Regexp
-	yesCmcRx  []*regexp.Regexp
-	noCmcRx   []*regexp.Regexp
-	yesManaRx []*regexp.Regexp
-	noManaRx  []*regexp.Regexp
-	yesTextRx []*regexp.Regexp
-	noTextRx  []*regexp.Regexp
-	yesTypeRx []*regexp.Regexp
-	noTypeRx  []*regexp.Regexp
+	yesNameRx   []*regexp.Regexp
+	noNameRx    []*regexp.Regexp
+	yesCidRx    []*regexp.Regexp
+	noCidRx     []*regexp.Regexp
+	yesCmcRx    []*regexp.Regexp
+	noCmcRx     []*regexp.Regexp
+	yesManaRx   []*regexp.Regexp
+	noManaRx    []*regexp.Regexp
+	yesTextRx   []*regexp.Regexp
+	noTextRx    []*regexp.Regexp
+	yesTypeRx   []*regexp.Regexp
+	noTypeRx    []*regexp.Regexp
+	yesRarityRx []*regexp.Regexp
+	noRarityRx  []*regexp.Regexp
 }
 
 func (c *cConfig) init() {
@@ -65,6 +68,8 @@ func (c *cConfig) init() {
 	c.noTextRx = c.processRxList(c.Rx.NoText)
 	c.yesTypeRx = c.processRxList(c.Rx.Type)
 	c.noTypeRx = c.processRxList(c.Rx.NoType)
+	c.yesRarityRx = c.processRxList(c.Rx.Type)
+	c.noRarityRx = c.processRxList(c.Rx.NoType)
 }
 
 func (c *cConfig) processRxList(l []string) []*regexp.Regexp {
@@ -119,6 +124,7 @@ func (c *cConfig) matches(s string, l []*regexp.Regexp) int {
 }
 
 func (c *cConfig) classify(card *mtgv4Card) []string {
+	// Bail early
 	if m := c.matches(card.Name, c.noNameRx); m > 0 {
 		return nil
 	}
@@ -131,6 +137,10 @@ func (c *cConfig) classify(card *mtgv4Card) []string {
 	if m := c.matches(strings.Join(card.ColorIdentity, ""), c.noCidRx); m > 0 {
 		return nil
 	}
+	if m := c.matches(card.Rarity, c.noRarityRx); m > 0 {
+		return nil
+	}
+	// Succeed late
 	if m := c.matches(card.Name, c.yesNameRx); m > 0 {
 		return c.Tags
 	}
@@ -144,6 +154,9 @@ func (c *cConfig) classify(card *mtgv4Card) []string {
 		return c.Tags
 	}
 	if m := c.matches(strings.Join(card.ColorIdentity, ""), c.yesCidRx); m > 0 {
+		return c.Tags
+	}
+	if m := c.matches(card.Rarity, c.yesRarityRx); m > 0 {
 		return c.Tags
 	}
 	return nil
@@ -167,7 +180,6 @@ func classify(card *mtgv4Card) {
 		}
 	}
 	for t := range tags {
-		log.Println(card.Name, t)
 		card.CustomClassification = append(card.CustomClassification, t)
 	}
 }
